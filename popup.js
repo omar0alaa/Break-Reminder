@@ -3,14 +3,13 @@ document.getElementById('stopBtn').addEventListener('click', stopReminders);
 
 // Load user settings on popup open
 chrome.storage.sync.get(['breakInterval'], function(result) {
-  console.log('Retrieved breakInterval:', result.breakInterval);
   const savedInterval = result.breakInterval || 30; // Default to 30 minutes
   document.getElementById('intervalInput').value = savedInterval;
 });
 
 function startReminders() {
-  const breakInterval = parseInt(document.getElementById('intervalInput').value, 10) * 60 * 1000;
-  console.log('Starting reminders with breakInterval:', breakInterval);
+  const userInput = parseInt(document.getElementById('intervalInput').value, 10);
+  const breakInterval = Math.max(userInput, 1) * 60 * 1000; // Enforce a minimum of 1 minute
 
   // Save user setting
   chrome.storage.sync.set({ 'breakInterval': breakInterval });
@@ -22,14 +21,12 @@ function startReminders() {
 
 function stopReminders() {
   clearInterval(intervalId);
-  console.log('Reminders stopped.');
 }
 
 function showNotification(title, message) {
-  console.log('Showing notification:', title, message);
   chrome.notifications.create({
     type: 'basic',
-    iconUrl: 'images/Icon-44.png',
+    iconUrl: 'images/icon48.png',
     title: title,
     message: message
   });
