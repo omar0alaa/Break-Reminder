@@ -6,3 +6,10 @@ This is an Open Source extension for chrome or chromium based browsers.
 
 The Fuction is simple set a time in minuts which you want the extension to remind you to take a break and click start. 
 There is a timer to also show you how long until the next notification.
+
+# Installtion 
+Installation is simple:
+1- unzip the release file or clone the repository.
+2- Open extensions tab in your browser.
+3- enable developer mode
+4- click load unpacked and choose the older of the extension
