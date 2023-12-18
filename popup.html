@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Break Reminder</title>
-    <style>
-      body {
-        width: 200px;
-      }
-    </style>
-  </head>
-  <body>
-    <h2>Break Reminder</h2>
-    <button id="startBtn">Start</button>
-    <button id="stopBtn">Stop</button>
-  </body>
-  <script src="popup.js"></script>
+<head>
+  <title>Break Reminder</title>
+  <style>
+    body {
+      width: 250px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Break Reminder</h2>
+  <label for="intervalInput">Break Interval (minutes):</label>
+  <input type="number" id="intervalInput" min="1" value="30">
+  <br>
+  <button id="startBtn">Start</button>
+  <button id="stopBtn">Stop</button>
+</body>
+<script src="popup.js"></script>
 </html>
