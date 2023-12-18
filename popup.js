@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
   const port = chrome.runtime.connect({ name: 'popup' });
+  let lastKnownNextNotificationTime;
+  let intervalId;
 
   // Load user settings on popup open
   chrome.storage.sync.get(['breakInterval'], function (result) {
     const savedInterval = result.breakInterval || 30 * 60 * 1000; // Default to 30 minutes
-    const savedIntervalMinutes = savedInterval / (60 * 1000);
-    document.getElementById('intervalInput').value = savedIntervalMinutes;
+    document.getElementById('intervalInput').value = savedInterval;
   });
 
   document.getElementById('startBtn').addEventListener('click', startReminders);
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function startReminders() {
     const userInput = parseInt(document.getElementById('intervalInput').value, 10);
-    const breakInterval = Math.max(userInput, 1) ;//* 60 * 1000; // Enforce a minimum of 1 minute
+    const breakInterval = Math.max(userInput, 1) * 60 * 1000; // Enforce a minimum of 1 minute
 
     // Save user setting
     chrome.storage.sync.set({ 'breakInterval': breakInterval });
@@ -41,11 +42,21 @@ document.addEventListener('DOMContentLoaded', function () {
   // Message listener to update the next notification time and start the timer
   port.onMessage.addListener(function (msg) {
     if (msg.action === 'updateNextNotificationTime') {
-      updateNextNotificationTimer(msg.nextNotificationTime);
-      // Continue requesting the next notification time to keep the timer updated
+      lastKnownNextNotificationTime = msg.nextNotificationTime || lastKnownNextNotificationTime;
+      updateNextNotificationTimer(lastKnownNextNotificationTime);
+    }
+  });
+
+  // Add an event listener for the visibilitychange event to handle popup reopening
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) {
+      // If the popup is visible, request the next notification time
       requestNextNotificationTime();
     }
   });
+
+  // Update the timer every second to achieve real-time updates
+  setInterval(requestNextNotificationTime, 200);
 
   function updateNextNotificationTimer(time) {
     const nextNotificationElement = document.getElementById('nextNotification');
