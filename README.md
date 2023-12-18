@@ -13,3 +13,4 @@ Installation is simple:
 2- Open extensions tab in your browser.
 3- enable developer mode
 4- click load unpacked and choose the older of the extension
+
