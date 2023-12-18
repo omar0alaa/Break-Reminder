@@ -9,8 +9,12 @@ There is a timer to also show you how long until the next notification.
 
 # Installtion 
 Installation is simple:
+
 1- unzip the release file or clone the repository.
+
 2- Open extensions tab in your browser.
+
 3- enable developer mode
+
 4- click load unpacked and choose the older of the extension
 
