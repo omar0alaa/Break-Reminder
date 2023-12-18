@@ -1,10 +1,10 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Break Reminder",
-  "version": "1.1",
+  "version": "0.8",
   "description": "Reminds you to take breaks during long sessions.",
   "permissions": ["notifications", "storage"],
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html",
     "default_icon": {
       "24": "images/Icon-24.png",
@@ -18,7 +18,6 @@
     "108": "images/Icon-108.png"
   },
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "service_worker": "background.js"
   }
 }
